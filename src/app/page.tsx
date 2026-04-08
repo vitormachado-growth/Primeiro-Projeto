@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { 
   Play, 
@@ -142,6 +143,136 @@ export default function Home() {
               <p className="text-zinc-400 leading-relaxed">
                 Edição cinematográfica e focada na sincronia perfeita com a música para destacar suas melhores jogadas.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-24 px-6 relative border-t border-zinc-900">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-4">O QUE A GALERA DIZ</h2>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Testimonial 1 */}
+            <div className="bg-zinc-950 border border-zinc-800 p-8 rounded-2xl relative hover:border-green-500/30 transition-colors">
+              <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
+              <p className="text-zinc-400 italic mb-8 relative z-10 text-sm leading-relaxed">
+                "Mano, o vídeo ficou muito além do que eu esperava! A sincronia daquela play de AWP com a batida da música ficou insana. Entregou no prazo certinho."
+              </p>
+              <div className="flex items-center gap-4">
+                <Image 
+                  src="/avatar-helio.jpg" 
+                  alt="HelioGames avatar" 
+                  width={48} 
+                  height={48} 
+                  className="w-12 h-12 rounded-full object-cover shadow-inner"
+                />
+                <div>
+                  <div className="font-bold text-zinc-100">HelioGames</div>
+                  <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Streamer da Twitch</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-zinc-950 border border-zinc-800 p-8 rounded-2xl relative hover:border-green-500/30 transition-colors">
+              <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
+              <p className="text-zinc-400 italic mb-8 relative z-10 text-sm leading-relaxed">
+                "Desde que comecei a postar os cortes que você edita, meu canal no TikTok dobrou de tamanho. As legendas prendem muito a atenção da galera. Brabo demais!"
+              </p>
+              <div className="flex items-center gap-4">
+                <Image 
+                  src="/avatar-davi.jpg" 
+                  alt="DaviJogos avatar" 
+                  width={48} 
+                  height={48} 
+                  className="w-12 h-12 rounded-full object-cover shadow-inner"
+                />
+                <div>
+                  <div className="font-bold text-zinc-100">DaviJogos</div>
+                  <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Criador de Conteúdo</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="bg-zinc-950 border border-zinc-800 p-8 rounded-2xl relative hover:border-green-500/30 transition-colors">
+              <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
+              <p className="text-zinc-400 italic mb-8 relative z-10 text-sm leading-relaxed">
+                "O melhor editor com quem já trampei. O cara tem feeling pra meme, sabe exatamente a hora de cortar e o flow do vídeo nunca fica cansativo."
+              </p>
+              <div className="flex items-center gap-4">
+                <Image 
+                  src="/avatar-gabriel.jpg" 
+                  alt="GabrielGamePlays avatar" 
+                  width={48} 
+                  height={48} 
+                  className="w-12 h-12 rounded-full object-cover shadow-inner"
+                />
+                <div>
+                  <div className="font-bold text-zinc-100">GabrielGamePlays</div>
+                  <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Youtuber (100k)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-24 px-6 relative bg-zinc-900/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-4">PLANOS & VALORES</h2>
+            <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
+            <p className="text-zinc-400 mt-6 max-w-2xl mx-auto">
+              Valores base para os estilos mais procurados. Para projetos longos ou mensais, ajustamos o orçamento de acordo com a sua necessidade.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Plan 1 */}
+            <div className="flex flex-col bg-zinc-950/80 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors">
+              <h3 className="text-xl font-bold text-zinc-300 mb-2">Shorts & TikTok</h3>
+              <div className="text-4xl font-black text-green-400 mb-6">R$ 40<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+              <ul className="space-y-4 mb-8 flex-1 text-zinc-400 text-sm">
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Até 1 minuto de duração</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Legendas Animadas (estilo gringo)</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Zoom, Efeitos Sonoros e Memes</li>
+              </ul>
+              <a href="#contact" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
+            </div>
+
+            {/* Plan 2 */}
+            <div className="flex flex-col bg-zinc-900 border-2 border-green-500 p-8 rounded-2xl relative transform hover:-translate-y-2 transition-transform shadow-[0_0_30px_rgba(34,197,94,0.1)]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">
+                Mais Vendido
+              </div>
+              <h3 className="text-xl font-bold text-zinc-100 mb-2">Highlights YouTube</h3>
+              <div className="text-4xl font-black text-green-400 mb-6">R$ 120<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+              <ul className="space-y-4 mb-8 flex-1 text-zinc-300 text-sm">
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Vídeos de 8 a 15 minutos</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Cortes dinâmicos da Live / VOD</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia musical e Color Grading</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Retenção Máxima</li>
+              </ul>
+              <a href="#contact" className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black rounded-xl text-center transition-colors shadow-lg">Quero Este</a>
+            </div>
+
+            {/* Plan 3 */}
+            <div className="flex flex-col bg-zinc-950/80 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors">
+              <h3 className="text-xl font-bold text-zinc-300 mb-2">Fragmovie / Montage</h3>
+              <div className="text-4xl font-black text-green-400 mb-6">R$ 180<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+              <ul className="space-y-4 mb-8 flex-1 text-zinc-400 text-sm">
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Edição Cinematográfica</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia avançada de tiros/batidas</li>
+                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Efeitos Visuais (VFX / RSMB / Glow)</li>
+              </ul>
+              <a href="#contact" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
             </div>
           </div>
         </div>

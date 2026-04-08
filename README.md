@@ -18,6 +18,10 @@ Diferente do CSS tradicional, o **Tailwind CSS** trouxe benefícios estruturais 
 2. **Performance e CSS "Enxuto"**: O compilador do Tailwind funciona sob demanda. Quando publicamos o site (no nosso build de produção), ele analisa todos os arquivos em busca de classes usadas pelas nossas tags e gera apenas e puramente os estilos necessários que foram exigidos. Não há desperdício nem "peso" extra de CSS para o usuário baixar no primeiro acesso.
 3. **Padrão de Cores Consistente**: O sistema de design restrito do Tailwind impediu as quebras de padrão e ajudou com as paletas (como o `green-500` da marca predefinido misturado com os tons de escuridão `zinc-950`). 
 
+### 🌟 Funcionalidades Adicionadas
+- **Tabela de Valores (`#pricing`)**: Uma vitrine de três planos destacados para estilos de edição populares (Shorts/TikTok, Highlights e Montages) projetada para fácil leitura e conversão.
+- **Seção de Depoimentos (Social Proof)**: Inclusão de depoimentos dinâmicos com a funcionalidade Next/Image (`<Image />`) para otimizar nativamente o carregamento das avatares fornecidas pelo usuário, sem afetar o Largest Contentful Paint (LCP).
+
 ---
 
 ## 🛠️ Como rodar o projeto localmente
