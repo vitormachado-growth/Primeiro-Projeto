@@ -19,8 +19,10 @@ Diferente do CSS tradicional, o **Tailwind CSS** trouxe benefícios estruturais 
 3. **Padrão de Cores Consistente**: O sistema de design restrito do Tailwind impediu as quebras de padrão e ajudou com as paletas (como o `green-500` da marca predefinido misturado com os tons de escuridão `zinc-950`). 
 
 ### 🌟 Funcionalidades Adicionadas
-- **Tabela de Valores (`#pricing`)**: Uma vitrine de três planos destacados para estilos de edição populares (Shorts/TikTok, Highlights e Montages) projetada para fácil leitura e conversão.
+- **Tabela de Valores (`#pricing`)**: Uma vitrine de três planos destacados para estilos de edição populares (Shorts/TikTok, Highlights e Montages) projetada para fácil leitura e conversão. Atualização do texto comercial da vitrine destacada para "Preferido".
+- **Integração Básica Customizada com WhatsApp**: Todos os botões comerciais da página ("Quero Este" da vitrine de preços e "Chamar no WhatsApp" do CTA) foram programados para levar o usuário diretamente para o WhatsApp com mensagens de interesse pré-formatadas baseadas no pacote clicado.
 - **Seção de Depoimentos (Social Proof)**: Inclusão de depoimentos dinâmicos com a funcionalidade Next/Image (`<Image />`) para otimizar nativamente o carregamento das avatares fornecidas pelo usuário, sem afetar o Largest Contentful Paint (LCP).
+- **Ícones de Social Media Customizados Vetoriais**: Substituição de ícones coloridos pesados de redes externas por SVGs Inlines minimalistas (outline) integrados diretamente no código da página para o TikTok, LinkedIn e Instagram no canto inferior, com efeito de highlight em cores neon e redirecionamento de URL.
 
 ---
 

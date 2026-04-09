@@ -24,11 +24,11 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-green-500/30">
+    <div className="min-h-screen bg-transparent text-zinc-50 font-sans selection:bg-green-500/30">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900">
+      <nav className="fixed top-0 w-full z-50 bg-[#121212]/80 backdrop-blur-md border-b border-zinc-900">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-2xl font-black italic tracking-tighter">
+          <div className="flex items-center gap-2 text-2xl font-display italic tracking-tighter">
             <Video className="w-8 h-8 text-green-500" />
             <span className="text-white">VT</span>
             <span className="text-green-500">EDITS</span>
@@ -58,7 +58,7 @@ export default function Home() {
               <span>Edição Profissional de Vídeo</span>
             </motion.div>
             
-            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-black tracking-tight drop-shadow-2xl">
+            <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-display uppercase tracking-tight drop-shadow-2xl">
               ELEVE O NÍVEL DA <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">SUA GAMEPLAY</span>
             </motion.h1>
@@ -68,10 +68,10 @@ export default function Home() {
             </motion.p>
             
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 pt-4">
-              <a href="#services" className="h-14 px-8 bg-green-500 hover:bg-green-400 text-black font-bold flex items-center justify-center rounded-xl transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]">
+              <a href="#services" className="h-14 px-8 bg-green-500 hover:bg-green-400 text-black font-bold flex items-center justify-center rounded-xl transition-all duration-150 hover:scale-105 hover:shadow-neon-strong">
                 Ver Serviços
               </a>
-              <a href="#contact" className="h-14 px-8 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 text-white font-bold flex items-center justify-center rounded-xl transition-all hover:bg-zinc-800">
+              <a href="#contact" className="h-14 px-8 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 hover:shadow-neon text-white font-bold flex items-center justify-center rounded-xl transition-all duration-150 hover:bg-zinc-800">
                 Fazer Orçamento
               </a>
             </motion.div>
@@ -107,7 +107,7 @@ export default function Home() {
       <section id="services" className="py-24 px-6 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-4">O QUE EU FAÇO</h2>
+            <h2 className="text-3xl md:text-5xl font-display mb-4">O QUE EU FAÇO</h2>
             <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
           </div>
 
@@ -152,7 +152,7 @@ export default function Home() {
       <section id="testimonials" className="py-24 px-6 relative border-t border-zinc-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-4">O QUE A GALERA DIZ</h2>
+            <h2 className="text-3xl md:text-5xl font-display mb-4">O QUE A GALERA DIZ</h2>
             <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
           </div>
 
@@ -227,7 +227,7 @@ export default function Home() {
       <section id="pricing" className="py-24 px-6 relative bg-zinc-900/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-4">PLANOS & VALORES</h2>
+            <h2 className="text-3xl md:text-5xl font-display mb-4">PLANOS & VALORES</h2>
             <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
             <p className="text-zinc-400 mt-6 max-w-2xl mx-auto">
               Valores base para os estilos mais procurados. Para projetos longos ou mensais, ajustamos o orçamento de acordo com a sua necessidade.
@@ -244,23 +244,23 @@ export default function Home() {
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Legendas Animadas (estilo gringo)</li>
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Zoom, Efeitos Sonoros e Memes</li>
               </ul>
-              <a href="#contact" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
+              <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Shorts%20e%20Tiktok%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
             </div>
 
             {/* Plan 2 */}
-            <div className="flex flex-col bg-zinc-900 border-2 border-green-500 p-8 rounded-2xl relative transform hover:-translate-y-2 transition-transform shadow-[0_0_30px_rgba(34,197,94,0.1)]">
+            <div className="flex flex-col bg-zinc-900 border-2 border-green-500 p-8 rounded-2xl relative transform hover:-translate-y-2 transition-transform shadow-neon">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">
-                Mais Vendido
+                Preferido
               </div>
               <h3 className="text-xl font-bold text-zinc-100 mb-2">Highlights YouTube</h3>
-              <div className="text-4xl font-black text-green-400 mb-6">R$ 120<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+              <div className="text-4xl font-display text-green-400 mb-6">R$ 120<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
               <ul className="space-y-4 mb-8 flex-1 text-zinc-300 text-sm">
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Vídeos de 8 a 15 minutos</li>
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Cortes dinâmicos da Live / VOD</li>
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia musical e Color Grading</li>
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Retenção Máxima</li>
               </ul>
-              <a href="#contact" className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black rounded-xl text-center transition-colors shadow-lg">Quero Este</a>
+              <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Highlights%20Youtube%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black rounded-xl text-center transition-colors shadow-neon-strong">Quero Este</a>
             </div>
 
             {/* Plan 3 */}
@@ -272,7 +272,7 @@ export default function Home() {
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia avançada de tiros/batidas</li>
                 <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Efeitos Visuais (VFX / RSMB / Glow)</li>
               </ul>
-              <a href="#contact" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
+              <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Fragmove%20e%20Montage%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
             </div>
           </div>
         </div>
@@ -283,63 +283,95 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-green-400 blur-[80px] rounded-full pointer-events-none" />
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black mb-6">PRONTO PARA CRESCER?</h2>
+          <h2 className="text-4xl md:text-6xl font-display mb-6">PRONTO PARA CRESCER?</h2>
           <p className="text-xl font-medium mb-10 opacity-90">
             A qualidade do seu vídeo diz tudo sobre o seu conteúdo. Vamos transformar suas ideias num bagulho insano.
           </p>
           <div className="flex justify-center gap-4">
-            <button className="h-14 px-8 bg-black text-white hover:bg-zinc-900 font-bold flex items-center gap-2 rounded-xl transition-all hover:scale-105 shadow-xl">
+            <a 
+              href="https://api.whatsapp.com/send/?phone=5521997227400&text&type=phone_number&app_absent=0" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="h-14 px-8 bg-black text-white hover:bg-zinc-900 font-bold flex items-center gap-2 rounded-xl transition-all duration-150 hover:scale-105 shadow-xl hover:shadow-neon"
+            >
               <MessageSquare className="w-5 h-5" />
               Chamar no WhatsApp
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Floating Bottom Right Contacts */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+      {/* Floating Bottom Right Socials */}
+      <div className="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
         <a 
-          href="#" 
-          className="w-10 h-10 bg-zinc-800 hover:bg-green-500 hover:text-black border border-zinc-700 text-zinc-300 rounded-full flex items-center justify-center transition-all shadow-lg hover:scale-110"
-          aria-label="Instagram"
+          href="https://www.tiktok.com/@vtzzz20" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative flex items-center justify-center w-14 h-14 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl transition-all duration-300 hover:border-green-500/50 hover:shadow-neon hover:-translate-y-1"
+          aria-label="TikTok"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="28"
+            height="28"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-4 h-4"
+            className="w-7 h-7 text-zinc-300 group-hover:text-green-500 transition-colors"
+          >
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+          </svg>
+        </a>
+        <a 
+          href="https://www.linkedin.com/in/vitor-da-silva-machado-1188971b4/" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative flex items-center justify-center w-14 h-14 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl transition-all duration-300 hover:border-green-500/50 hover:shadow-neon hover:-translate-y-1"
+          aria-label="LinkedIn"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-7 h-7 text-zinc-300 group-hover:text-green-500 transition-colors"
+          >
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect width="4" height="12" x="2" y="9" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+        </a>
+        <a 
+          href="https://www.instagram.com/vt.axe/" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative flex items-center justify-center w-14 h-14 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl transition-all duration-300 hover:border-green-500/50 hover:shadow-neon hover:-translate-y-1"
+          aria-label="Instagram"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-7 h-7 text-zinc-300 group-hover:text-green-500 transition-colors"
           >
             <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
             <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
           </svg>
-        </a>
-        <a 
-          href="#" 
-          className="w-10 h-10 bg-zinc-800 hover:bg-green-500 hover:text-black border border-zinc-700 text-zinc-300 rounded-full flex items-center justify-center transition-all shadow-lg hover:scale-110"
-          aria-label="Discord"
-        >
-          <MonitorPlay className="w-4 h-4" />
-        </a>
-        <a 
-          href="#" 
-          className="w-10 h-10 bg-zinc-800 hover:bg-green-500 hover:text-black border border-zinc-700 text-zinc-300 rounded-full flex items-center justify-center transition-all shadow-lg hover:scale-110"
-          aria-label="Email"
-        >
-          <Mail className="w-4 h-4" />
-        </a>
-        <a 
-          href="#" 
-          className="w-12 h-12 bg-green-500 text-black rounded-full flex items-center justify-center transition-all shadow-[0_0_15px_rgba(34,197,94,0.4)] hover:scale-110 font-bold"
-          aria-label="WhatsApp Principal"
-        >
-          <MessageSquare className="w-5 h-5" />
         </a>
       </div>
     </div>
