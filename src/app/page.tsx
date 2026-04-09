@@ -1,6 +1,7 @@
 "use client";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { 
   Play, 
   Scissors, 
@@ -12,6 +13,84 @@ import {
   MessageSquare
 } from "lucide-react";
 
+function SpotlightCard({ children, className = "", delay = 0, scrollReveal }: { children: React.ReactNode, className?: string, delay?: number, scrollReveal: any }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  // 3D Tilt Logic
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+
+  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
+  const smoothMouseX = useSpring(mouseX, springConfig);
+  const smoothMouseY = useSpring(mouseY, springConfig);
+
+  const rotateX = useTransform(smoothMouseY, [0, 1], ["10deg", "-10deg"]);
+  const rotateY = useTransform(smoothMouseX, [0, 1], ["-10deg", "10deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    
+    // Position for Glow
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setPosition({ x, y });
+
+    // Normalized coordinates for Tilt (0 to 1)
+    mouseX.set(x / rect.width);
+    mouseY.set(y / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    setOpacity(0);
+    // Reset tilt to center smoothly
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  };
+
+  return (
+    <div className="perspective-1000">
+      <motion.div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setOpacity(1)}
+        onMouseLeave={handleMouseLeave}
+        variants={scrollReveal}
+        style={{ rotateX, rotateY }}
+        whileHover={{ y: -10, z: 20 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        className={`relative group ${className} rounded-2xl transform-gpu`}
+      >
+        {/* Container for effects that need clipping */}
+        <div className="absolute inset-0 overflow-hidden rounded-[inherit] pointer-events-none z-0">
+          {/* Dynamic Glow Layer */}
+          <div
+            className="absolute -inset-px transition-opacity duration-300"
+            style={{
+              opacity,
+              background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(252, 238, 10, 0.12), transparent 80%)`,
+            }}
+          />
+          
+          {/* Border Light Effect */}
+          <div
+            className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background: `radial-gradient(200px circle at ${position.x}px ${position.y}px, rgba(252, 238, 10, 0.3), transparent 70%)`,
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 h-full">
+          {children}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function Home() {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -21,6 +100,13 @@ export default function Home() {
 
   const staggerChildren = {
     animate: { transition: { staggerChildren: 0.1 } }
+  };
+
+  const scrollReveal = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-120px" },
+    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] }
   };
 
   return (
@@ -82,199 +168,293 @@ export default function Home() {
       {/* Stats / Proof */}
       <section className="bg-zinc-900/50 border-y border-zinc-900">
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-zinc-800">
-            <div className="px-4">
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-zinc-800"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={{
+              whileInView: { transition: { staggerChildren: 0.1 } }
+            }}
+          >
+            <motion.div variants={scrollReveal} className="px-4">
               <div className="text-3xl font-black text-green-400">4K/60fps</div>
               <div className="text-zinc-500 text-sm mt-1">Qualidade Máxima</div>
-            </div>
-            <div className="px-4">
+            </motion.div>
+            <motion.div variants={scrollReveal} className="px-4">
               <div className="text-3xl font-black text-green-400">24/48h</div>
               <div className="text-zinc-500 text-sm mt-1">Entrega Rápida</div>
-            </div>
-            <div className="px-4">
+            </motion.div>
+            <motion.div variants={scrollReveal} className="px-4">
               <div className="text-3xl font-black text-green-400">+500</div>
               <div className="text-zinc-500 text-sm mt-1">Vídeos Editados</div>
-            </div>
-            <div className="px-4">
+            </motion.div>
+            <motion.div variants={scrollReveal} className="px-4">
               <div className="text-3xl font-black text-green-400">100%</div>
               <div className="text-zinc-500 text-sm mt-1">Foco na Retenção</div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Services */}
       <section id="services" className="py-24 px-6 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={scrollReveal}
+          >
             <h2 className="text-3xl md:text-5xl font-display mb-4">O QUE EU FAÇO</h2>
             <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-6"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={{
+              whileInView: { transition: { staggerChildren: 0.2 } }
+            }}
+          >
             {/* Service 1 */}
-            <div className="group bg-zinc-900/40 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors cursor-default">
-              <div className="w-14 h-14 bg-green-500/10 text-green-400 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Play className="w-7 h-7" />
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-900/40 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8">
+                <div className="w-14 h-14 bg-green-500/10 text-green-400 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Play className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Highlights de Stream</h3>
+                <p className="text-zinc-400 group-hover:text-zinc-200 leading-relaxed transition-colors">
+                  Reúno os melhores momentos da sua live, cortando partes ociosas e adicionando memes/efeitos para o YouTube.
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-3">Highlights de Stream</h3>
-              <p className="text-zinc-400 leading-relaxed">
-                Reúno os melhores momentos da sua live, cortando partes ociosas e adicionando memes/efeitos para o YouTube.
-              </p>
-            </div>
+            </SpotlightCard>
 
             {/* Service 2 */}
-            <div className="group bg-zinc-900/40 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors cursor-default">
-              <div className="w-14 h-14 bg-green-500/10 text-green-400 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Scissors className="w-7 h-7" />
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-900/40 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8">
+                <div className="w-14 h-14 bg-green-500/10 text-green-400 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Scissors className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">TikToks e Shorts</h3>
+                <p className="text-zinc-400 group-hover:text-zinc-200 leading-relaxed transition-colors">
+                  Edição super dinâmica com legendas animadas em formato vertical. O segredo para viralizar e atrair público novo.
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-3">TikToks e Shorts</h3>
-              <p className="text-zinc-400 leading-relaxed">
-                Edição super dinâmica com legendas animadas em formato vertical. O segredo para viralizar e atrair público novo.
-              </p>
-            </div>
+            </SpotlightCard>
 
             {/* Service 3 */}
-            <div className="group bg-zinc-900/40 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors cursor-default">
-              <div className="w-14 h-14 bg-green-500/10 text-green-400 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Gamepad2 className="w-7 h-7" />
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-900/40 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8">
+                <div className="w-14 h-14 bg-green-500/10 text-green-400 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Gamepad2 className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Montages / Fragmovies</h3>
+                <p className="text-zinc-400 group-hover:text-zinc-200 leading-relaxed transition-colors">
+                  Edição cinematográfica e focada na sincronia perfeita com a música para destacar suas melhores jogadas.
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-3">Montages / Fragmovies</h3>
-              <p className="text-zinc-400 leading-relaxed">
-                Edição cinematográfica e focada na sincronia perfeita com a música para destacar suas melhores jogadas.
-              </p>
-            </div>
-          </div>
+            </SpotlightCard>
+          </motion.div>
         </div>
       </section>
 
       {/* Testimonials Section */}
       <section id="testimonials" className="py-24 px-6 relative border-t border-zinc-900">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={scrollReveal}
+          >
             <h2 className="text-3xl md:text-5xl font-display mb-4">O QUE A GALERA DIZ</h2>
             <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-6"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={{
+              whileInView: { transition: { staggerChildren: 0.2 } }
+            }}
+          >
             {/* Testimonial 1 */}
-            <div className="bg-zinc-950 border border-zinc-800 p-8 rounded-2xl relative hover:border-green-500/30 transition-colors">
-              <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
-              <p className="text-zinc-400 italic mb-8 relative z-10 text-sm leading-relaxed">
-                "Mano, o vídeo ficou muito além do que eu esperava! A sincronia daquela play de AWP com a batida da música ficou insana. Entregou no prazo certinho."
-              </p>
-              <div className="flex items-center gap-4">
-                <Image 
-                  src="/avatar-helio.jpg" 
-                  alt="HelioGames avatar" 
-                  width={48} 
-                  height={48} 
-                  className="w-12 h-12 rounded-full object-cover shadow-inner"
-                />
-                <div>
-                  <div className="font-bold text-zinc-100">HelioGames</div>
-                  <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Streamer da Twitch</div>
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-950 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8 relative">
+                <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
+                <p className="text-zinc-400 group-hover:text-zinc-200 italic mb-8 relative z-10 text-sm leading-relaxed transition-colors">
+                  "Mano, o vídeo ficou muito além do que eu esperava! A sincronia daquela play de AWP com a batida da música ficou insana. Entregou no prazo certinho."
+                </p>
+                <div className="flex items-center gap-4">
+                  <Image 
+                    src="/avatar-helio.jpg" 
+                    alt="HelioGames avatar" 
+                    width={48} 
+                    height={48} 
+                    className="w-12 h-12 rounded-full object-cover shadow-inner"
+                  />
+                  <div>
+                    <div className="font-bold text-zinc-100">HelioGames</div>
+                    <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Streamer da Twitch</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
 
             {/* Testimonial 2 */}
-            <div className="bg-zinc-950 border border-zinc-800 p-8 rounded-2xl relative hover:border-green-500/30 transition-colors">
-              <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
-              <p className="text-zinc-400 italic mb-8 relative z-10 text-sm leading-relaxed">
-                "Desde que comecei a postar os cortes que você edita, meu canal no TikTok dobrou de tamanho. As legendas prendem muito a atenção da galera. Brabo demais!"
-              </p>
-              <div className="flex items-center gap-4">
-                <Image 
-                  src="/avatar-davi.jpg" 
-                  alt="DaviJogos avatar" 
-                  width={48} 
-                  height={48} 
-                  className="w-12 h-12 rounded-full object-cover shadow-inner"
-                />
-                <div>
-                  <div className="font-bold text-zinc-100">DaviJogos</div>
-                  <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Criador de Conteúdo</div>
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-950 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8 relative">
+                <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
+                <p className="text-zinc-400 group-hover:text-zinc-200 italic mb-8 relative z-10 text-sm leading-relaxed transition-colors">
+                  "Desde que comecei a postar os cortes que você edita, meu canal no TikTok dobrou de tamanho. As legendas prendem muito a atenção da galera. Brabo demais!"
+                </p>
+                <div className="flex items-center gap-4">
+                  <Image 
+                    src="/avatar-davi.jpg" 
+                    alt="DaviJogos avatar" 
+                    width={48} 
+                    height={48} 
+                    className="w-12 h-12 rounded-full object-cover shadow-inner"
+                  />
+                  <div>
+                    <div className="font-bold text-zinc-100">DaviJogos</div>
+                    <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Criador de Conteúdo</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
 
-            {/* Testimonial 3 */}
-            <div className="bg-zinc-950 border border-zinc-800 p-8 rounded-2xl relative hover:border-green-500/30 transition-colors">
-              <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
-              <p className="text-zinc-400 italic mb-8 relative z-10 text-sm leading-relaxed">
-                "O melhor editor com quem já trampei. O cara tem feeling pra meme, sabe exatamente a hora de cortar e o flow do vídeo nunca fica cansativo."
-              </p>
-              <div className="flex items-center gap-4">
-                <Image 
-                  src="/avatar-gabriel.jpg" 
-                  alt="GabrielGamePlays avatar" 
-                  width={48} 
-                  height={48} 
-                  className="w-12 h-12 rounded-full object-cover shadow-inner"
-                />
-                <div>
-                  <div className="font-bold text-zinc-100">GabrielGamePlays</div>
-                  <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Youtuber (100k)</div>
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-950 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8 relative">
+                <div className="text-green-500 text-6xl font-serif absolute -top-2 right-6 opacity-20">"</div>
+                <p className="text-zinc-400 group-hover:text-zinc-200 italic mb-8 relative z-10 text-sm leading-relaxed transition-colors">
+                  "O melhor editor com quem já trampei. O cara tem feeling pra meme, sabe exatamente a hora de cortar e o flow do vídeo nunca fica cansativo."
+                </p>
+                <div className="flex items-center gap-4">
+                  <Image 
+                    src="/avatar-gabriel.jpg" 
+                    alt="GabrielGamePlays avatar" 
+                    width={48} 
+                    height={48} 
+                    className="w-12 h-12 rounded-full object-cover shadow-inner"
+                  />
+                  <div>
+                    <div className="font-bold text-zinc-100">GabrielGamePlays</div>
+                    <div className="text-xs text-green-500 font-bold uppercase tracking-wider">Youtuber (100k)</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </SpotlightCard>
+          </motion.div>
         </div>
       </section>
 
       {/* Pricing Section */}
       <section id="pricing" className="py-24 px-6 relative bg-zinc-900/30">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={scrollReveal}
+          >
             <h2 className="text-3xl md:text-5xl font-display mb-4">PLANOS & VALORES</h2>
             <div className="w-20 h-1 bg-green-500 mx-auto rounded-full" />
             <p className="text-zinc-400 mt-6 max-w-2xl mx-auto">
               Valores base para os estilos mais procurados. Para projetos longos ou mensais, ajustamos o orçamento de acordo com a sua necessidade.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            variants={{
+              whileInView: { transition: { staggerChildren: 0.2 } }
+            }}
+          >
             {/* Plan 1 */}
-            <div className="flex flex-col bg-zinc-950/80 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors">
-              <h3 className="text-xl font-bold text-zinc-300 mb-2">Shorts & TikTok</h3>
-              <div className="text-4xl font-black text-green-400 mb-6">R$ 40<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
-              <ul className="space-y-4 mb-8 flex-1 text-zinc-400 text-sm">
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Até 1 minuto de duração</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Legendas Animadas (estilo gringo)</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Zoom, Efeitos Sonoros e Memes</li>
-              </ul>
-              <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Shorts%20e%20Tiktok%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
-            </div>
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-950/80 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8 flex flex-col h-full">
+                <h3 className="text-xl font-bold text-zinc-300 mb-2">Shorts & TikTok</h3>
+                <div className="text-4xl font-black text-green-400 mb-6">R$ 40<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+                <ul className="space-y-4 mb-8 flex-1 text-zinc-400 group-hover:text-zinc-200 text-sm transition-colors">
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Até 1 minuto de duração</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Legendas Animadas (estilo gringo)</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Zoom, Efeitos Sonoros e Memes</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Shorts%20e%20Tiktok%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
+              </div>
+            </SpotlightCard>
 
             {/* Plan 2 */}
-            <div className="flex flex-col bg-zinc-900 border-2 border-green-500 p-8 rounded-2xl relative transform hover:-translate-y-2 transition-transform shadow-neon">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">
-                Preferido
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-900 border-2 border-green-500 shadow-neon"
+            >
+              <div className="p-8 flex flex-col h-full relative z-20">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-black text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider z-50 shadow-neon opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none">
+                  Preferido
+                </div>
+                <h3 className="text-xl font-bold text-zinc-100 mb-2">Highlights YouTube</h3>
+                <div className="text-4xl font-display text-green-400 mb-6">R$ 120<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+                <ul className="space-y-4 mb-8 flex-1 text-zinc-300 group-hover:text-zinc-100 text-sm transition-colors">
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Vídeos de 8 a 15 minutos</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Cortes dinâmicos da Live / VOD</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia musical e Color Grading</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Retenção Máxima</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Highlights%20Youtube%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black rounded-xl text-center transition-colors shadow-neon-strong">Quero Este</a>
               </div>
-              <h3 className="text-xl font-bold text-zinc-100 mb-2">Highlights YouTube</h3>
-              <div className="text-4xl font-display text-green-400 mb-6">R$ 120<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
-              <ul className="space-y-4 mb-8 flex-1 text-zinc-300 text-sm">
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Vídeos de 8 a 15 minutos</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Cortes dinâmicos da Live / VOD</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia musical e Color Grading</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Retenção Máxima</li>
-              </ul>
-              <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Highlights%20Youtube%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black rounded-xl text-center transition-colors shadow-neon-strong">Quero Este</a>
-            </div>
+            </SpotlightCard>
 
             {/* Plan 3 */}
-            <div className="flex flex-col bg-zinc-950/80 border border-zinc-800 hover:border-green-500/50 p-8 rounded-2xl transition-colors">
-              <h3 className="text-xl font-bold text-zinc-300 mb-2">Fragmovie / Montage</h3>
-              <div className="text-4xl font-black text-green-400 mb-6">R$ 180<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
-              <ul className="space-y-4 mb-8 flex-1 text-zinc-400 text-sm">
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Edição Cinematográfica</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia avançada de tiros/batidas</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Efeitos Visuais (VFX / RSMB / Glow)</li>
-              </ul>
-              <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Fragmove%20e%20Montage%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
-            </div>
-          </div>
+            <SpotlightCard 
+              scrollReveal={scrollReveal}
+              className="bg-zinc-950/80 border border-zinc-800 hover:border-green-500"
+            >
+              <div className="p-8 flex flex-col h-full">
+                <h3 className="text-xl font-bold text-zinc-300 mb-2">Fragmovie / Montage</h3>
+                <div className="text-4xl font-black text-green-400 mb-6">R$ 180<span className="text-lg text-zinc-500 font-normal">/vídeo</span></div>
+                <ul className="space-y-4 mb-8 flex-1 text-zinc-400 group-hover:text-zinc-200 text-sm transition-colors">
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Edição Cinematográfica</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Sincronia avançada de tiros/batidas</li>
+                  <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-green-500" /> Efeitos Visuais (VFX / RSMB / Glow)</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send/?phone=5521997227400&text=Ol%C3%A1!%20Estou%20interessado%20no%20pacote%20%22Fragmove%20e%20Montage%22." target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-zinc-900 hover:bg-green-500 hover:text-black text-white font-bold rounded-xl text-center transition-colors border border-zinc-800 hover:border-transparent">Quero Este</a>
+              </div>
+            </SpotlightCard>
+          </motion.div>
         </div>
       </section>
 

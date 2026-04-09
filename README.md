@@ -24,6 +24,12 @@ Diferente do CSS tradicional, o **Tailwind CSS** trouxe benefícios estruturais 
 - **Seção de Depoimentos (Social Proof)**: Inclusão de depoimentos dinâmicos com a funcionalidade Next/Image (`<Image />`) para otimizar nativamente o carregamento das avatares fornecidas pelo usuário, sem afetar o Largest Contentful Paint (LCP).
 - **Ícones de Social Media Customizados Vetoriais**: Substituição de ícones coloridos pesados de redes externas por SVGs Inlines minimalistas (outline) integrados diretamente no código da página para o TikTok, LinkedIn e Instagram no canto inferior, com efeito de highlight em cores neon e redirecionamento de URL.
 
+### ✨ Efeitos e Animações de Alta Performance
+Para elevar a página a um nível visual premium (Gaming / High-End Design), implementamos interações avançadas usando `framer-motion`:
+1. **Scroll Animations**: Implementado efeito "smooth scroll reveal" nos elementos da página. Aceleração, timing e staggered children configurados de forma customizada. *Referência: [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)*.
+2. **Spotlight Glow**: Os cards não têm apenas um hover simples, eles agem como um refletor (spotlight). O uso de `radial-gradient` associado ao cursor rastreia a posição do mouse e revela bordas iluminadas nas áreas exatas onde ele passa. *Referência: [Spotlight Card por Micha-Szlagor](https://codepen.io/Micha-Szlagor/pen/eYbdVZO)*.
+3. **Física de Inclinação 3D (Tilt)**: Usando matemática de vetores combinada com `useMotionValue` e mola mecânica (`useSpring`), criamos um "peso" para os cards. A posição (`X/Y`) do ponteiro aplica as rotações `rotateX/Y`, torcendo os cards e interagindo harmoniosamente com a iluminação do spotlight. *Referência: [Samsung's Privacy Display por CalculateQuick](https://codepen.io/CalculateQuick/pen/dPpGNxr)*.
+
 ---
 
 ## 🛠️ Como rodar o projeto localmente
